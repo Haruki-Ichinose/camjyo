@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Hscode_2digitController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('Hscode_2digit/index', [Hscode_2digitController::class,'index'])->name('2digit.index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
