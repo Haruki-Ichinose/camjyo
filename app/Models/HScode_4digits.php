@@ -16,4 +16,12 @@ class HScode_4digits extends Model
                    ->orderBy('id', 'asc')
                    ->get();
     }
+
+    public static function get4digit_TableContents($string)
+    {   
+        return self::where( 'HScode_4', '=', $string)
+                   ->orderBy('id', 'asc')
+                   ->first();
+    }
+
 }

@@ -14,7 +14,7 @@
             </div>
             
             <!--ボタンタグの部分-->
-            @for ($i = 1; $i <= 2; $i++)
+            @for ($i = 1; $i <= 10; $i++)
                 <form method="POST" action="{{ route('2digit.index' , ['number' => $i] ) }}" >
                     @csrf
                     <button class="btn btn-outline-primary" type="submit" >第{{$i}}類</button>
