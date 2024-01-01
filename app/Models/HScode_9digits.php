@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class HScode_9digits extends Model
 {
     use HasFactory;
+
+    public static function get9digit_TableContents($string)
+    {   
+        return self::where( 'HScode_4', '=', $string)
+                   ->orderBy('HScode_5', 'asc')
+                   ->get();
+    }
 }
