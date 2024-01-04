@@ -16,6 +16,15 @@
                 <tr>
                     <td>{{$item -> HScode_4}}</td>
                     <td>{{$item -> description}}</td>
+                    @php
+                        $buf = $item -> HScode_4;
+                    @endphp
+                    <td>
+                        <form method="POST" action="{{ route('6digit.index' , ['number' => $buf] ) }}">
+                            @csrf
+                            <button type="submit" >詳細</button>
+                        </form>
+                    </td>
                 </tr>
             </tbody>
             @endforeach
