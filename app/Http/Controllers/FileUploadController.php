@@ -25,7 +25,7 @@ class FileUploadController extends Controller
                 $googleDrive->fileUpload($file);
 
                 // アップロード成功時のメッセージをセッションに保存
-                Session::flash('success', 'ファイルが正常にアップロードされました。');
+                Session::flash('success', 'ファイルがアップロードされました。');
             } catch (\Exception $e) {
                 // アップロード失敗時のメッセージをセッションに保存
                 Session::flash('error', 'ファイルのアップロード中にエラーが発生しました。');
