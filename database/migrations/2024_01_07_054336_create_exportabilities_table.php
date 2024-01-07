@@ -11,26 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('exports', function (Blueprint $table) {
+        Schema::create('exportabilities', function (Blueprint $table) {
             $table->id();
             $table->foreignId('h_scode_9digits_id')->constrained()->cascadeOnDelete();
             $table->foreignId('countries_id')->constrained()->cascadeOnDelete();
-            $table->string('label');
-            $table->text('imformation');
-            $table->text('URL');
-            $table->foreignId('parents_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('child_id')->constrained()->cascadeOnDelete();
+            $table->integer('exportability');
+            $table->text('explanation');
             $table->timestamps();
         });
     }
-
-    
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('imformations');
+        Schema::dropIfExists('exportabilities');
     }
 };
