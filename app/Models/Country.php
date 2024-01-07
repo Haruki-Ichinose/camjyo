@@ -15,4 +15,11 @@ class Country extends Model
                    ->orderBy('id', 'asc')
                    ->get();
     }
+
+    public static function getCountry_id($string)
+    {   
+        $country = self::where('name', $string)->orderBy('id', 'asc')->first();
+    
+        return $country ? $country->id : null;
+    }
 }

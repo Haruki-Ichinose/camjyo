@@ -20,7 +20,7 @@
                                 <input type="hidden" name="number" value="{{ $four_digit_ctt -> HScode_4 }}">
                             @for($i = 1; $i <= $N; $i++)
                                 <th>輸出国{{$i}}
-                                    <select name="countries[]" id="">
+                                    <select name="countries[]" id="" class=" form-select form-select-sm $form-select-font-size:3 mb-3" aria-label=".form-select-sm example">
                                         @foreach($allCountries as $country)
                                             <option value="{{ $country -> name  }}" {{ $input_countries[$i-1] == $country -> name ? 'selected' : '' }}>
                                                 {{$country -> name}}
@@ -36,14 +36,17 @@
                     </tr>
                 </thead>
                 
-                @foreach($nine_digit_ctt as $nine_digit_ctt)
+                @foreach($nine_digit_ctt as $Nine_digit_ctt)
                 <tbody>
                     <tr>
-                        <td>{{$nine_digit_ctt -> description}}</td>
-                        <td>{{$nine_digit_ctt -> HScode_4}}{{$nine_digit_ctt -> HScode_5}}</td>
+                        <td>{{$Nine_digit_ctt -> description}}</td>
+                        <td>{{$Nine_digit_ctt -> HScode_4}}{{$Nine_digit_ctt -> HScode_5}}</td>
                         @for($i = 1; $i <= $N; $i++)
                             <td>
                                 状態
+                                <a href="{{ route('exportability.create', ['HScode' => $Nine_digit_ctt, 'Country' => $input_countries[$i-1] ]) }}">
+                                    {{ __('登録') }}
+                                </a>
                             </td>
                         @endfor
                     </tr>
@@ -52,5 +55,7 @@
                 </table>
             </div>
         </div>
+
+
  
 </x-app-layout>

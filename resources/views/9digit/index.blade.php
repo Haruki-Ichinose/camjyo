@@ -20,7 +20,8 @@
                                 <input type="hidden" name="number" value="{{ $four_digit_ctt -> HScode_4 }}">
                             @for($i = 1; $i <= $N; $i++)
                                 <th>輸出国{{$i}}
-                                    <select name="countries[]" id="">
+                                    <select name="countries[]" id="" class="form-select form-select-sm mb-3" aria-label=".form-select-sm example">
+                                            <option value=""></option>
                                         @foreach($allCountries as $country)
                                             <option value="{{ $country -> name  }}">
                                                 {{$country -> name}}

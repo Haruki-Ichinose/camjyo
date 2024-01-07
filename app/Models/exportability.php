@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class exportability extends Model
 {
     use HasFactory;
+
 }
