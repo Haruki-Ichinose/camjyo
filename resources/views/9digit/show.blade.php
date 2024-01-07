@@ -15,14 +15,14 @@
                 <thead>    
                     <tr>
                         <th>品目</th><th>HScode</th>
-                        <form method="POST" action="{{ route('6digit.show')}}">
+                        <form method="POST" action="{{ route('6digit.show') }}">
                             @csrf
                                 <input type="hidden" name="number" value="{{ $four_digit_ctt -> HScode_4 }}">
                             @for($i = 1; $i <= $N; $i++)
                                 <th>輸出国{{$i}}
                                     <select name="countries[]" id="">
                                         @foreach($allCountries as $country)
-                                            <option value="{{ $country -> name  }}">
+                                            <option value="{{ $country -> name  }}" {{ $input_countries[$i-1] == $country -> name ? 'selected' : '' }}>
                                                 {{$country -> name}}
                                             </option>
                                         @endforeach
@@ -43,7 +43,7 @@
                         <td>{{$nine_digit_ctt -> HScode_4}}{{$nine_digit_ctt -> HScode_5}}</td>
                         @for($i = 1; $i <= $N; $i++)
                             <td>
-                                ー
+                                状態
                             </td>
                         @endfor
                     </tr>
@@ -52,4 +52,5 @@
                 </table>
             </div>
         </div>
+ 
 </x-app-layout>
