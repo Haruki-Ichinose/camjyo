@@ -17,9 +17,10 @@
             @for ($i = 1; $i <= 10; $i++)
                 <form method="POST" action="{{ route('2digit.index' , ['number' => $i] ) }}" >
                     @csrf
-                    <button class="btn btn-outline-primary" type="submit" >第{{$i}}類</button>
+                    <button class="btn btn-outline-primary  btn-lg" type="submit" >第{{$i}}類</button>
                 </form>
             @endfor
         </div>
     </div>
+    
 </x-app-layout>
