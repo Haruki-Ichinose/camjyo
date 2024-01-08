@@ -58,19 +58,30 @@
                                     @else
                                         <p class="">判断保留中<p>
                                     @endif
-                                    <a href="{{ route('exportability.edit', ['exportability'=>$exportability]) }}">
-                                        {{ __('編集') }}
-                                    </a>
-                                    <br>
-                                    <a href="{{ route('exportability.show',['exportability'=>$exportability,'HScode' => $hscode_id, 'Country' => $country_id ])}}">
-                                        {{ __('詳細書類確認') }}
-                                    </a>
+                                    <form method="GET" action="{{ route('exportability.edit')}}">
+                                        <input type="hidden" name="exportability_id" value="{{ $exportability -> id }}" >
+                                        <input type="hidden" name="Country" value="{{ $input_countries[$i-1] }}" >
+                                        <input type="hidden" name="category" value="{{ $four_digit_ctt -> description }}" >
+                                        <input type="hidden" name="HScode_id" value="{{ $hscode_id}}">
+                                        <input type="submit" value="編集"></button>
+                                    </form>
+                                    
+                                    <form method="GET" action="{{ route('exportability.show')}}">
+                                        <input type="hidden" name="exportability_id" value="{{ $exportability -> id }}" >
+                                        <input type="hidden" name="Country" value="{{ $input_countries[$i-1] }}" >
+                                        <input type="hidden" name="category" value="{{ $four_digit_ctt -> description }}" >
+                                        <input type="hidden" name="HScode_id" value="{{ $hscode_id}}">
+                                        <input type="submit" value="書類詳細確認"></button>
+                                    </form>
                                 @else
                                     <!-- 情報がない場合のリンク -->
                                     <p class="">データ未入力<p>
-                                    <a href="{{ route('exportability.create', ['HScode' => $hscode_id, 'Country' => $country_id ]) }}">
-                                        {{ __('新規登録') }}
-                                    </a>
+                                    <form method="GET" action="{{ route('exportability.create')}}">
+                                        <input type="hidden" name="Country" value="{{ $input_countries[$i-1] }}" >
+                                        <input type="hidden" name="category" value="{{ $four_digit_ctt -> description }}" >
+                                        <input type="hidden" name="HScode_id" value="{{ $hscode_id}}">
+                                        <input type="submit" value="新規登録"></button>
+                                    </form>
                                 @endif
                                 </td>
                             @endfor
