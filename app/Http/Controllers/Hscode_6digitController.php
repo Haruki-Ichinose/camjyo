@@ -42,9 +42,15 @@ class Hscode_6digitController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request)
     {
-        //
+        $countries = $request->input('countries');
+        $num = $request->input('number');
+
+        $Table_of_4digit_Contents = HScode_4digits::get4digit_TableContents($num);
+        $Table_of_9digit_Contents = HScode_9digits::get9digit_TableContents($num);
+
+        return view('9digit.show', ['four_digit_ctt' => $Table_of_4digit_Contents,'nine_digit_ctt' => $Table_of_9digit_Contents, 'input_countries'=> $countries]);
     }
 
     /**

@@ -23,6 +23,7 @@ Route::get('/', function () {
 
 Route::post('Hscode_2digit/index', [Hscode_2digitController::class,'index'])->name('2digit.index');
 Route::post('Hscode_6digit/index', [Hscode_6digitController::class,'index'])->name('6digit.index');
+Route::post('Hscode_6digit/show', [Hscode_6digitController::class,'show'])->name('6digit.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
