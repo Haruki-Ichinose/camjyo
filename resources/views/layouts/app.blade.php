@@ -23,24 +23,23 @@
     </head>
     <body class="font-sans antialiased bg-white"> <!-- ここで背景色を指定 -->
         @include('layouts.navigation')
+        
+         <!-- サイドバーの部分 -->
+    <div class="flex">
+        <sidebar />
+
+        <main class="flex-1">
 
         <!-- Page Heading -->
         @if (isset($header))
             <header class="bg-teal-600  shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <div class="max-w-screen-xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     {{ $header }}
                 </div>
             </header>
         @endif
 
-         <!-- Page card -->
-        @if (isset($card))
-            <header class="bg-teal-600  shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $card }}
-                </div>
-            </header>
-        @endif
+
 
         <!-- Page Content -->
         <main>
