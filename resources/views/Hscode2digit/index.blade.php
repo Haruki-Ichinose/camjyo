@@ -1,9 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-white leading-tight">
             第{{ $number }}類
         </h2>
     </x-slot>
+    <div class="flex">
+        <!-- サイドバーコンポーネントの呼び出し -->
+        @include('layouts.sidebar')
+    
+        <main class="flex-1">      
     <div class="mx-auto p-4">
         <table class="table table-striped border border-white shadow-md" style="table-layout: fixed; width: 100%;">
             <colgroup>
@@ -11,7 +16,7 @@
                 <col style="width: 33.3%;">
                 <col style="width: 33.3%;">
             </colgroup>
-            <thead class="bg-blue-500 text-black">
+            <thead class="bg-yellow-500 text-black">
                 <tr>
                     <th class="fs-5 border">HScode上4桁</th>
                     <th class="fs-5 border">品目</th>
@@ -37,4 +42,6 @@
             </tbody>
         </table>
     </div>
+    </main>
+    </div> 
 </x-app-layout>
