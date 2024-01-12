@@ -23,6 +23,9 @@
         <form action="{{ route('exportability.destroy',$exportability_data -> id) }}" method="POST">
             @csrf
             @method('delete')
+            @foreach($page_info as $value)
+                <input type="hidden" name="page_info[]" value="{{$value}}">
+            @endforeach
             <input type="submit" value="削除実行"></button>
         </form>
     </div>
@@ -49,7 +52,9 @@
             </div>
             <input type="hidden" name="countries_id" value="{{$Country_id}}">
             <input type="hidden" name="h_scode_9digits_id" value="{{$HScode_id}}">
-
+            @foreach($page_info as $value)
+                <input type="hidden" name="page_info[]" value="{{$value}}">
+            @endforeach
             <div class="flex items-center mt-4">
                 <input type="submit" value="変更を登録する">
             </div>

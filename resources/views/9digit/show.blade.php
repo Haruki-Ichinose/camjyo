@@ -10,43 +10,45 @@
         </h2>
     </x-slot>
 
-    <div class="mx-auto p-4">
+    <div class="mx-auto p-4 ">
     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6 max-auto text-gray-900 ">
-        <form method="POST" action="{{ route('6digit.show') }}" class="mb-6">
-            @csrf
-            <input type="hidden" name="number" value="{{ $four_digit_ctt->HScode_4 }}">
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                <div class="col-span-2">
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">品目</label>
-                    <span class="text-lg font-semibold">{{ $four_digit_ctt->description }}</span>
-                </div>
+            <form method="POST" action="{{ route('6digit.show') }}" class="mb-6">
+                @csrf
+                <input type="hidden" name="number" value="{{ $four_digit_ctt->HScode_4 }}">
                 
-                <div class="col-span-2">
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">HScode</label>
-                    <span class="text-lg font-semibold">{{ $four_digit_ctt->HScode_4 }}{{ $four_digit_ctt->HScode_5 }}</span>
-                </div>
-                
-                @for($i = 1; $i <= $N; $i++)
-                    <div>
-                        <label for="country{{ $i }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300">輸出国{{ $i }}</label>
-                        <select name="countries[]" id="country{{ $i }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                            @foreach($allCountries as $country)
-                                <option value="{{ $country->name }}">
-                                    {{ $country->name }}
-                                </option>
-                            @endforeach
-                        </select>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                    <div class="col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">品目</label>
+                        <span class="text-lg font-semibold">{{ $four_digit_ctt->description }}</span>
                     </div>
-                @endfor
-                
-                <div class="col-span-2 flex items-end">
-                    <button type="submit" class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
-                        検索
-                    </button>
+                    
+                    <div class="col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">HScode</label>
+                        <span class="text-lg font-semibold">{{ $four_digit_ctt->HScode_4 }}{{ $four_digit_ctt->HScode_5 }}</span>
+                    </div>
+                    <div class="clear-both">
+                        @for($i = 1; $i <= $N; $i++)
+                            <div>
+                                <label for="country{{ $i }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300">輸出国{{ $i }}</label>
+                                <select name="countries[]" id="country{{ $i }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                    @foreach($allCountries as $country)
+                                        <option value="{{ $country -> name  }}" {{ $input_countries[$i-1] == $country -> name ? 'selected' : '' }}>
+                                            {{ $country->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        @endfor
+                    </div>
+                    
+                    <div class="col-span-2 flex items-end">
+                        <button type="submit" class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
+                            検索
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
         
         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
             <thead class="bg-gray-50 dark:bg-gray-700">
@@ -59,7 +61,8 @@
                     </th>
                     @for($i = 1; $i <= $N; $i++)
                         <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                            輸出国{{ $i }}
+                        
+                        輸出国{{$i}}:{{ $input_countries[$i-1] }}
                         </th>
                     @endfor
                 </tr>
@@ -90,15 +93,16 @@
                                     <form method="GET" action="{{ route('exportability.edit')}}">
                                         <input type="hidden" name="exportability_id" value="{{ $exportability -> id }}" >
                                         <input type="hidden" name="Country" value="{{ $input_countries[$i-1] }}" >
-                                        <input type="hidden" name="category" value="{{ $four_digit_ctt -> description }}" >
                                         <input type="hidden" name="HScode_id" value="{{ $hscode_id}}">
+                                        <input type="hidden" name="page_info[]" value="{{ $four_digit_ctt->HScode_4 }}">
+                                        @for($k = 1; $k <= $N; $k++)    
+                                            <input type="hidden" name="page_info[]" value="{{ $input_countries[$k-1] }}">
+                                        @endfor
                                         <input type="submit" value="編集"></button>
                                     </form>
                                     
                                     <form method="GET" action="{{ route('exportability.show')}}">
-                                        <input type="hidden" name="exportability_id" value="{{ $exportability -> id }}" >
                                         <input type="hidden" name="Country" value="{{ $input_countries[$i-1] }}" >
-                                        <input type="hidden" name="category" value="{{ $four_digit_ctt -> description }}" >
                                         <input type="hidden" name="HScode_id" value="{{ $hscode_id}}">
                                         <input type="submit" value="書類詳細確認"></button>
                                     </form>
@@ -107,8 +111,11 @@
                                     <p class="">データ未入力<p>
                                     <form method="GET" action="{{ route('exportability.create')}}">
                                         <input type="hidden" name="Country" value="{{ $input_countries[$i-1] }}" >
-                                        <input type="hidden" name="category" value="{{ $four_digit_ctt -> description }}" >
                                         <input type="hidden" name="HScode_id" value="{{ $hscode_id}}">
+                                        <input type="hidden" name="page_info[]" value="{{ $four_digit_ctt->HScode_4 }}">
+                                        @for($k = 1; $k <= $N; $k++)    
+                                            <input type="hidden" name="page_info[]" value="{{ $input_countries[$k-1] }}">
+                                        @endfor
                                         <input type="submit" value="新規登録"></button>
                                     </form>
                                 @endif
