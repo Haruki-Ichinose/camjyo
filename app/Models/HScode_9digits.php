@@ -15,4 +15,12 @@ class HScode_9digits extends Model
                    ->orderBy('HScode_5', 'asc')
                    ->get();
     }
+
+
+    public static function get9digit_TableContents_fromID($string)
+    {   
+        return self::where( 'id', '=', $string)
+                   ->orderBy('HScode_5', 'asc')
+                   ->first();
+    }
 }
