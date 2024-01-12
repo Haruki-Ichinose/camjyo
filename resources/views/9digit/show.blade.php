@@ -65,15 +65,54 @@
                 </tr>
             </thead>
                 
-                @foreach($nine_digit_ctt as $nine_digit_ctt)
+                @foreach($nine_digit_ctt as $Nine_digit_ctt)
                 <tbody>
                     <tr>
-                        <td class="px-6 py-4 whitespace-nowrap">{{$nine_digit_ctt -> description}}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{$nine_digit_ctt -> HScode_4}}{{$nine_digit_ctt -> HScode_5}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{$Nine_digit_ctt -> description}}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">{{$Nine_digit_ctt -> HScode_4}}{{$Nine_digit_ctt -> HScode_5}}</td>
                         @for($i = 1; $i <= $N; $i++)
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                状態
-                            </td>
+                                <td>
+                                @php
+                                    $country_id = $country_ids[$i-1];
+                                    $hscode_id = $Nine_digit_ctt->id;
+                                    $exportability = $exportabilities[$country_id][$hscode_id] ?? null;
+                                @endphp
+
+                                @if ($exportability)
+                                    <!-- ここにexportabilityの具体的な情報を表示 -->
+                                    @if($exportability->exportability== 1 )
+                                        <p class="">輸出可能<p>    
+                                    @elseif($exportability->exportability== 2 )
+                                        <p class="">輸出不可能<p>
+                                    @else
+                                        <p class="">判断保留中<p>
+                                    @endif
+                                    <form method="GET" action="{{ route('exportability.edit')}}">
+                                        <input type="hidden" name="exportability_id" value="{{ $exportability -> id }}" >
+                                        <input type="hidden" name="Country" value="{{ $input_countries[$i-1] }}" >
+                                        <input type="hidden" name="category" value="{{ $four_digit_ctt -> description }}" >
+                                        <input type="hidden" name="HScode_id" value="{{ $hscode_id}}">
+                                        <input type="submit" value="編集"></button>
+                                    </form>
+                                    
+                                    <form method="GET" action="{{ route('exportability.show')}}">
+                                        <input type="hidden" name="exportability_id" value="{{ $exportability -> id }}" >
+                                        <input type="hidden" name="Country" value="{{ $input_countries[$i-1] }}" >
+                                        <input type="hidden" name="category" value="{{ $four_digit_ctt -> description }}" >
+                                        <input type="hidden" name="HScode_id" value="{{ $hscode_id}}">
+                                        <input type="submit" value="書類詳細確認"></button>
+                                    </form>
+                                @else
+                                    <!-- 情報がない場合のリンク -->
+                                    <p class="">データ未入力<p>
+                                    <form method="GET" action="{{ route('exportability.create')}}">
+                                        <input type="hidden" name="Country" value="{{ $input_countries[$i-1] }}" >
+                                        <input type="hidden" name="category" value="{{ $four_digit_ctt -> description }}" >
+                                        <input type="hidden" name="HScode_id" value="{{ $hscode_id}}">
+                                        <input type="submit" value="新規登録"></button>
+                                    </form>
+                                @endif
+                                </td>
                         @endfor
                     </tr>
                 </tbody>

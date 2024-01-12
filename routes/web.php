@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Hscode_2digitController;
 use App\Http\Controllers\Hscode_6digitController;
+use App\Http\Controllers\ExportabilityController;
 use App\Http\Controllers\FileUploadController;
 
 /*
@@ -24,6 +25,10 @@ Route::get('/', function () {
 Route::post('Hscode_2digit/index', [Hscode_2digitController::class,'index'])->name('2digit.index');
 Route::post('Hscode_6digit/index', [Hscode_6digitController::class,'index'])->name('6digit.index');
 Route::post('Hscode_6digit/show', [Hscode_6digitController::class,'show'])->name('6digit.show');
+
+Route::get('exportability/edit',[ ExportabilityController::class,'edit'])->name('exportability.edit');
+Route::get('exportability/show',[ ExportabilityController::class,'show'])->name('exportability.show');
+Route::resource('exportability', ExportabilityController::class)->except(['edit','show']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
