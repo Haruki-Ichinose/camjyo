@@ -15,4 +15,21 @@
 
     <h3>説明</h3>
     <p>{{$exportability_data -> explanation}}</p>
+
+  </x-slot>
+
+  @foreach($parents as $parent)
+      <details close>
+        <summary><h2>{{$parent -> parent}}</h2></summary>
+        @foreach($children as $child)
+          @if($child -> parents_id === $parent -> id)
+            <details>
+              <summary>{{ $child -> child }}</summary>
+                {{$child -> id }}
+            </details>
+          @endif
+        @endforeach
+      </details>
+  @endforeach
+
 </x-app-layout>

@@ -12,4 +12,5 @@ class Parents extends Model
   {
     return $this->hasMany(Child::class);
   }
+
 }

@@ -92,19 +92,14 @@
                                     @endif
                                     <form method="GET" action="{{ route('exportability.edit')}}">
                                         <input type="hidden" name="exportability_id" value="{{ $exportability -> id }}" >
-                                        <input type="hidden" name="Country" value="{{ $input_countries[$i-1] }}" >
-                                        <input type="hidden" name="HScode_id" value="{{ $hscode_id}}">
                                         <input type="hidden" name="page_info[]" value="{{ $four_digit_ctt->HScode_4 }}">
                                         @for($k = 1; $k <= $N; $k++)    
                                             <input type="hidden" name="page_info[]" value="{{ $input_countries[$k-1] }}">
                                         @endfor
                                         <input type="submit" value="編集"></button>
                                     </form>
-                                    
-                                    <form method="GET" action="{{ route('exportability.show')}}">
-                                        <input type="hidden" name="Country" value="{{ $input_countries[$i-1] }}" >
-                                        <input type="hidden" name="HScode_id" value="{{ $hscode_id}}">
-                                        <input type="submit" value="書類詳細確認"></button>
+                                    <form action="{{ route('exportability.show', ['exportability' => $exportability->id]) }}" method="GET">
+                                        <button type="submit">詳細書類確認</button>
                                     </form>
                                 @else
                                     <!-- 情報がない場合のリンク -->

@@ -8,6 +8,8 @@ use App\Models\Country;
 use App\Models\HScode_9digits;
 use App\Models\HScode_4digits;
 use App\Models\exportability;
+use App\Models\Parents;
+use App\Models\Child;
 use App\Http\Controllers\Hscode_6digitController;
 
 class ExportabilityController extends Controller
@@ -60,23 +62,35 @@ class ExportabilityController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request) //国とHScodeを確保しそのidからexportabilityを取得する。
-    {
-        
-        $Country = $request->input('Country');
-        $Country_id = Country::getCountry_id($Country);
-        $HScode_id = $request->input('HScode_id');
+    public function show($id) //国とHScodeを確保しそのidからexportabilityを取得する。
+    {   
+        $exportability_id = $id;
+        $exportability_data = exportability::where('id',$exportability_id)->orderby('updated_at','desc')->first();
 
-        $exportability_data = exportability::getdatafrom_Country_and_HScode($Country_id,$HScode_id);
+        $Country_id = $exportability_data -> countries_id;
+        $Country = Country::getCountry_name($Country_id);
+        $HScode_id = $exportability_data -> h_scode_9digits_id;
+
 
         $HScode_data = HScode_9digits::get9digit_TableContents_fromID($HScode_id);
 
-        $HScode_4 = $HScode_data -> HScode_4; 
+        $HScode_4 = $HScode_data -> HScode_4;
         $category = HScode_4digits::where('HScode_4',$HScode_4)->first();
         $category = $category -> description;
-        
+
+        $parents = Parents::orderBy('id','asc')->get();
+        $children = Child::orderBy('id','asc')->get();
      
-        return view('exportability.detail', compact('exportability_data','HScode_id','HScode_data','category','Country_id','Country') );        
+        return view('exportability.detail', compact(
+            'parents',
+            'children',
+            'exportability_data',
+            'HScode_id',
+            'HScode_data',
+            'category',
+            'Country_id',
+            'Country'
+            ) );        
     }
 
     /**
@@ -88,13 +102,17 @@ class ExportabilityController extends Controller
         $exportability_data = exportability::where('id',$exportability_id)->orderby('updated_at','desc')->first();
 
         // ここからcreateと同じ処理
-        $HScode_id = $request->input('HScode_id');
+        $Country_id = $exportability_data -> countries_id;
+        $Country = Country::getCountry_name($Country_id);
+        $HScode_id = $exportability_data -> h_scode_9digits_id;
+
+
         $HScode_data = HScode_9digits::get9digit_TableContents_fromID($HScode_id);
 
-        $category = $request->input('category');
-
-        $Country = $request->input('Country');
-        $Country_id = Country::getCountry_id($Country);
+        $HScode_4 = $HScode_data -> HScode_4;
+        $category = HScode_4digits::where('HScode_4',$HScode_4)->first();
+        $category = $category -> description;
+        
 
         $page_info = $request->input('page_info');
         // createと同じ処理ここまで
