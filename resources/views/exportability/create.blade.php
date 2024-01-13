@@ -13,7 +13,7 @@
           <form class="mb-6" action="{{ route('exportability.store') }}" method="POST">
             @csrf
             <div class="mb-10">
-              <select class="form-select mb-3" name="exportability" id="">
+              <select class="form-select mb-3" name="exportability" id="" required>
                 <option selected>輸出状況を選択</option>
                 <option value="1">輸出可能</option>
                 <option value="2">輸出不可</option>
@@ -22,7 +22,7 @@
             </div>
             <div class="mb-3">
               <label class="form-label">輸出可否についての説明</label>
-              <textarea class="form-control" name="explanation" rows="3"></textarea>
+              <textarea class="form-control" name="explanation" rows="3"  required></textarea>
             </div>
             <input type="hidden" name="countries_id" value="{{$Country_id}}">
             <input type="hidden" name="h_scode_9digits_id" value="{{$HScode_id}}">

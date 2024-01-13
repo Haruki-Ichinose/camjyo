@@ -5,21 +5,29 @@
     </h2>
    </x-slot>
    <div class="py-12">
-    <div class=" mx-auto w-9/12">
+    <div class="flex">
       <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-        <div class="p-6 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-800 ">
-          <h3>輸出可否</h3>
-          @if($exportability_data->exportability== 1 )
-              <p class="">輸出可能</p>    
-          @elseif($exportability_data->exportability== 2 )
-              <p class="">輸出不可能</p>
-          @else
-              <p class="">条件付き輸出可能</p>
-          @endif
-      
-          <h3>説明</h3>
-          <p>{{$exportability_data -> explanation}}</p>
-        </div>
+      <div class="p-6 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-800 flex flex-col">
+    <div class="mb-4 text-left">
+        <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200">輸出可否</h3>
+        <p class="text-gray-700 dark:text-gray-300">
+            @if($exportability_data->exportability == 1)
+                輸出可能
+            @elseif($exportability_data->exportability == 2)
+                輸出不可能
+            @else
+                条件付き輸出可能
+            @endif
+        </p>
+    </div>
+
+    <div class="text-left">
+        <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200">説明</h3>
+        <p class="text-gray-700 dark:text-gray-300">{{ $exportability_data->explanation }}</p>
+    </div>
+</div>
+</div>
+ <div class=" mx-auto w-9/12">
         <div class="p-6 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-800 ">
           @foreach($parents as $parent)
             <div class="p-6 border border-gray-200">
@@ -40,6 +48,9 @@
                             @if($grandchild -> child_id === $child -> id && $grandchild -> parent_id === $parent -> id )
                               <ol>
                                 <li class="ml-4 p-2 bg-white border border-gray-300 rounded">
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                     <label class="form-check-label" for="flexCheckDefault">
                                   <p class="font-bold">{{ $grandchild -> grandchild }}</p>
                                     <div class="mt-2 ml-2">
                                       @if(is_null($documents))
@@ -88,6 +99,8 @@
                                             <input class="p-2 border border-gray-500 rounded-lg text-sm" type="submit" value="ここに書類を追加"><bottun>
                                           </form>
                                         </div>
+                                         </label>
+                                         </div>
                                       @endif
                                     </div>
                                 </li>
