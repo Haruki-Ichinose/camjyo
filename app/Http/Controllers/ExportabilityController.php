@@ -59,6 +59,19 @@ class ExportabilityController extends Controller
     public function store(Request $request)
     {
       // バリデーション
+      $validator = Validator::make($request->all(), [
+            'exportability' => 'in:1,2,3',
+            'explanation' => 'required'
+        ],[
+            'exportability.in,1,2,3' => '輸出状況について正しく選択してください。',
+                'explanation.required'=>'説明を記入してください。'
+            ]
+        );
+        
+        // バリデーション:エラー
+        if ($validator->fails()) {
+            return back()->withInput()->withErrors($validator);;
+        }
 
       $result = exportability::create($request->except('page_info'));
       $page_info = $request -> input('page_info');
