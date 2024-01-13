@@ -19,7 +19,7 @@ class Child extends Seeder
             ['parents_id'=> '2','child'=> '動物・植物検疫検査'],
             ['parents_id'=> '2','child'=> '貿易協定'],
             ['parents_id'=> '2','child'=> '添加物・残留農薬など'],
-            ['parents_id'=> '2','child'=> '制限品目（放射性物質等）'],
+            ['parents_id'=> '2','child'=> 'その他の規制'],
             ['parents_id'=> '3','child'=> '輸出者'],
             ['parents_id'=> '3','child'=> '輸入者'],
             ['parents_id'=> '3','child'=> '仕入れ先'],
