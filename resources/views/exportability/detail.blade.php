@@ -34,14 +34,15 @@
                         <details>
                           <summary class="text-lg">{{ $child -> child }}</summary>
                           @foreach($grandchildren as $grandchild)
+                            @php
+                              $flag = 1;
+                            @endphp
                             @if($grandchild -> child_id === $child -> id && $grandchild -> parent_id === $parent -> id )
                               <ol>
                                 <li class="ml-4 p-2 bg-white border border-gray-300 rounded">
                                   <p class="font-bold">{{ $grandchild -> grandchild }}</p>
                                     <div class="mt-2 ml-2">
-                                      <p class="text-sm">アメリカ向け輸出牛肉取扱認定施設リスト</p>
-                                      <a class="text-sm" href="https://www.maff.go.jp/j/shokusan/hq/i-4/attach/pdf/yusyutu_shinsei_hokubei-23.pdf">https://www.maff.go.jp/j/shokusan/hq/i-4/attach/pdf/yusyutu_shinsei_hokubei-23.pdf</a>
-                                      @if(1)
+                                      @if(is_null($documents))
                                         <div class="mt-2 flex justify-end">
                                           <form method="GET" action="{{ route('document.create')}}">
                                             <input type="hidden" name="exportability_id" value="{{ $exportability_data -> id }}" >
@@ -52,18 +53,39 @@
                                           </form>
                                         </div>
                                       @else
-                                      <div class="mt-2 flex justify-end">
+                                      @foreach($documents as $document)
+                                        @if($grandchild -> id === $document -> grandchild_id && $grandchild -> child_id === $document -> child_id && $grandchild -> parent_id === $document ->parents_id )
+                                          @php
+                                            $flag = 0;
+                                          @endphp
+                                          <p class="text-sm">{{$document -> description}}</p>
+                                          <a class="text-sm" target="_blank" href="{{$document -> URL}}">{{$document -> URL}}</a>
+                                          <div class="mt-2 flex justify-end">
+                                              <form method="GET" action="{{ route('document.edit',$document -> id)}}">
+                                                <input type="hidden" name="exportability_id" value="{{ $exportability_data -> id }}" >
+                                                <input type="hidden" name="parent_id" value="{{ $grandchild -> parent_id }}">
+                                                <input type="hidden" name="child_id" value="{{ $grandchild -> child_id }}">
+                                                <input type="hidden" name="grandchild_id" value="{{ $grandchild -> id }}">
+                                                <input class="p-2 border border-gray-500 rounded-lg text-sm" type="submit" value="この書類を編集"><bottun>
+                                              </form>
+                                              <form action="{{ route('document.destroy', $document -> id )}}" method="POST">
+                                                @csrf
+                                                @method('delete')
+                                                  <input type="hidden" name="exportability_id" value="{{ $exportability_data -> id }}">
+                                                  <input class="p-2 border border-gray-500 rounded-lg text-sm" type="submit" value="この書類を削除"></button>
+                                              </form>
+                                            </div>
+                                        @endif
+                                      @endforeach
+                                      @endif
+                                      @if($flag)
+                                        <div class="mt-2 flex justify-end">
                                           <form method="GET" action="{{ route('document.create')}}">
                                             <input type="hidden" name="exportability_id" value="{{ $exportability_data -> id }}" >
                                             <input type="hidden" name="parent_id" value="{{ $grandchild -> parent_id }}">
                                             <input type="hidden" name="child_id" value="{{ $grandchild -> child_id }}">
                                             <input type="hidden" name="grandchild_id" value="{{ $grandchild -> id }}">
-                                            <input class="p-2 border border-gray-500 rounded-lg text-sm" type="submit" value="この書類を編集"><bottun>
-                                          </form>
-                                          <form action="{{ route('exportability.create') }}" method="POST">
-                                            @csrf
-                                            @method('delete')
-                                              <input class="p-2 border border-gray-500 rounded-lg text-sm" type="submit" value="この書類を削除"></button>
+                                            <input class="p-2 border border-gray-500 rounded-lg text-sm" type="submit" value="ここに書類を追加"><bottun>
                                           </form>
                                         </div>
                                       @endif
