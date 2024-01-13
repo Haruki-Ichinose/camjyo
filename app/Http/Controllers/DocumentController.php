@@ -61,8 +61,25 @@ class DocumentController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
+    {   
+        $exportability_id = $request->input('exportability_id');
+        $validator = Validator::make($request->all(), [
+            'URL' => 'nullable|url',
+            'description' => 'required'
+        ],[
+                'URL.url' => '有効なURLを入力してください。',
+                'description.required'=>'書類の情報を記入してください。'
+            ]
+        );
+        
+        // バリデーション:エラー
+        if ($validator->fails()) {
+            return back()->withInput()->withErrors($validator);;
+          }
+
+        $result = document::create($request->except('exportability_id'));
+
+        return redirect()->route('exportability.show',['exportability' => $exportability_id]);
     }
 
     /**
@@ -76,9 +93,38 @@ class DocumentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        //
+    public function edit(Request $request,string $id)
+    {   
+        $document_id = $id;
+        $document_data = document::where('id',$document_id)->orderBy('updated_at','desc')->first();
+
+        // 以下createと同じ処理
+        $exportability_id = $request->input('exportability_id');
+        
+        $parent_id = $request->input('parent_id');
+        $parent = Parents::getdata_fromID($parent_id);
+        
+        $child_id = $request->input('child_id');
+        $child = Child::getdata_fromID($child_id);
+
+        $grandchild_id = $request->input('grandchild_id');
+        $grandchild = grandchild::getdata_fromID($grandchild_id);
+
+        $exportability_data = exportability::where('id',$exportability_id)->orderBy('updated_at','desc')->first();
+        $country_name = Country::getCountry_name($exportability_data -> countries_id);
+        $HScode_data = HScode_9digits::get9digit_TableContents_fromID($exportability_data -> h_scode_9digits_id);
+        $category = HScode_4digits::where('HScode_4',$HScode_data->HScode_4)->first();
+        $category = $category -> description;
+        return view('document.edit',compact(
+            'parent',
+            'child',
+            'grandchild',
+            'exportability_data',
+            'country_name',
+            'HScode_data',
+            'category',
+            'document_data'
+        ));
     }
 
     /**
@@ -86,14 +132,34 @@ class DocumentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        
+        $exportability_id = $request->input('exportability_id');
+        $validator = Validator::make($request->all(), [
+            'URL' => 'nullable|url',
+            'description' => 'required'
+        ],[
+                'URL.url' => '有効なURLを入力してください。',
+                'description.required'=>'書類の情報を記入してください。'
+            ]
+        );
+        
+        // バリデーション:エラー
+        if ($validator->fails()) {
+            return back()->withInput()->withErrors($validator);;
+          }
+
+        $result = document::find($id)->update($request->except('exportability_id'));
+
+        return redirect()->route('exportability.show',['exportability' => $exportability_id]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request,string $id)
     {
-        //
+        $exportability_id = $request->input('exportability_id');
+        $result = document::find($id)->delete();
+        return redirect()->route('exportability.show',['exportability' => $exportability_id]);
     }
 }

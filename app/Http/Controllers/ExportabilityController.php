@@ -8,6 +8,7 @@ use App\Models\Country;
 use App\Models\HScode_9digits;
 use App\Models\HScode_4digits;
 use App\Models\exportability;
+use App\Models\document;
 use App\Models\Parents;
 use App\Models\Child;
 use App\Models\grandchild;
@@ -42,7 +43,14 @@ class ExportabilityController extends Controller
 
         $page_info = $request->input('page_info');
      
-        return view('exportability.create', compact('page_info','HScode_id','HScode_data','category','Country_id','Country') );
+        return view('exportability.create', compact(
+            'page_info',
+            'HScode_id',
+            'HScode_data',
+            'category',
+            'Country_id',
+            'Country'
+            ) );
     }
 
     /**
@@ -81,6 +89,8 @@ class ExportabilityController extends Controller
         $parents = Parents::orderBy('id','asc')->get();
         $children = Child::orderBy('id','asc')->get();
         $grandchildren = grandchild::orderBy('id','asc')->get();
+
+        $documents = document::get_from_IDs($Country_id,$HScode_id);
      
         return view('exportability.detail', compact(
             'parents',
@@ -91,7 +101,8 @@ class ExportabilityController extends Controller
             'HScode_data',
             'category',
             'Country_id',
-            'Country'
+            'Country',
+            'documents'
             ) );        
     }
 
