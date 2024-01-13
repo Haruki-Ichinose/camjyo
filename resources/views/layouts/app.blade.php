@@ -29,7 +29,8 @@
         <sidebar />
 
         <main class="flex-1">
-
+        </main>
+     </div>
         <!-- Page Heading -->
         @if (isset($header))
             <header class="bg-teal-600  shadow">
