@@ -10,6 +10,7 @@ use App\Models\HScode_4digits;
 use App\Models\exportability;
 use App\Models\Parents;
 use App\Models\Child;
+use App\Models\grandchild;
 use App\Http\Controllers\Hscode_6digitController;
 
 class ExportabilityController extends Controller
@@ -71,7 +72,6 @@ class ExportabilityController extends Controller
         $Country = Country::getCountry_name($Country_id);
         $HScode_id = $exportability_data -> h_scode_9digits_id;
 
-
         $HScode_data = HScode_9digits::get9digit_TableContents_fromID($HScode_id);
 
         $HScode_4 = $HScode_data -> HScode_4;
@@ -80,10 +80,12 @@ class ExportabilityController extends Controller
 
         $parents = Parents::orderBy('id','asc')->get();
         $children = Child::orderBy('id','asc')->get();
+        $grandchildren = grandchild::orderBy('id','asc')->get();
      
         return view('exportability.detail', compact(
             'parents',
             'children',
+            'grandchildren',
             'exportability_data',
             'HScode_id',
             'HScode_data',

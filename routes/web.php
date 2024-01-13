@@ -6,6 +6,7 @@ use App\Http\Controllers\Hscode_2digitController;
 use App\Http\Controllers\Hscode_6digitController;
 use App\Http\Controllers\ExportabilityController;
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\DocumentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,8 @@ Route::get('Hscode_6digit/access', [Hscode_6digitController::class,'access'])->n
 
 Route::get('exportability/edit',[ ExportabilityController::class,'edit'])->name('exportability.edit');
 Route::resource('exportability', ExportabilityController::class)->except('edit');
+
+Route::resource('document',DocumentController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
