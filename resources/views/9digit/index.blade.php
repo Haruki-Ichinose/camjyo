@@ -6,9 +6,15 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-white leading-tight max-w-screen-xl ">
-            {{ $four_digit_ctt->description }}: [HScodde"{{ $four_digit_ctt->HScode_4 }}"]の内容
+            {{ $four_digit_ctt->description }}と輸出先の候補を選んでください。
         </h2>
     </x-slot>
+     
+    <div class="flex">
+        <!-- サイドバーコンポーネントの呼び出し -->
+        @include('layouts.sidebar')
+
+        <main class="flex-1">
 
     <div class="mx-auto p-4">
     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6 max-auto text-gray-900 ">
@@ -17,20 +23,19 @@
             <input type="hidden" name="number" value="{{ $four_digit_ctt->HScode_4 }}">
             
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                <div class="col-span-2">
+                <div class="col-span-3">
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">品目</label>
                     <span class="text-lg font-semibold">{{ $four_digit_ctt->description }}</span>
                 </div>
                 
-                <div class="col-span-2">
+                <div class="col-span-3">
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">HScode</label>
                     <span class="text-lg font-semibold">{{ $four_digit_ctt->HScode_4 }}{{ $four_digit_ctt->HScode_5 }}</span>
                 </div>
-                
                 @for($i = 1; $i <= $N; $i++)
-                    <div>
+                    <div >
                         <label for="country{{ $i }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300">輸出国{{ $i }}</label>
-                        <select name="countries[]" id="country{{ $i }}" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <select name="countries[]" id="country{{ $i }}" class="mt-1 block  rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                             @foreach($allCountries as $country)
                                 <option value="{{ $country->name }}">
                                     {{ $country->name }}

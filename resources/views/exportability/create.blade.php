@@ -1,9 +1,10 @@
 <x-app-layout>
   <x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-gray-200">
-        {{$category}}のうち{{$HScode_data-> description}}なものを{{$Country}}へ送る
+    <h2 class="font-semibold text-xl text-white">
+        {{$category}}の{{$HScode_data-> description}}を{{$Country}}へ輸出
     </h2>
   </x-slot>
+  
 
   <div class="py-12">
     <div class="max-w-7xl mx-auto sm:w-8/12 md:w-1/2 lg:w-5/12">
@@ -15,9 +16,9 @@
             <div class="mb-10">
               <select class="form-select mb-3" name="exportability" id="" required>
                 <option selected>輸出状況を選択</option>
-                <option value="1">輸出可能</option>
-                <option value="2">輸出不可</option>
-                <option value="3">条件付き輸出可能</option>
+                <option value="1">O</option>
+                <option value="2">X</option>
+                <option value="3">条件付きO</option>
               </select>
             </div>
             <div class="mb-3">
