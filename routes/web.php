@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Hscode_2digitController;
 use App\Http\Controllers\Hscode_6digitController;
 use App\Http\Controllers\ExportabilityController;
-use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\GoogleDriveController;
 use App\Http\Controllers\DocumentController;
 
 /*
@@ -43,7 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/upload', [FileUploadController::class, 'uploadForm'])->name('upload.form');
-Route::post('/upload', [FileUploadController::class, 'upload'])->name('upload');
+Route::get('/upload', [GoogleDriveController::class, 'uploadForm'])->name('upload.form');
+Route::post('/upload', [GoogleDriveController::class, 'upload'])->name('upload');
 
 require __DIR__.'/auth.php';

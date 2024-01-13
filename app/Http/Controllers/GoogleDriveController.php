@@ -6,11 +6,11 @@ use Illuminate\Http\Request;
 use App\Console\Commands\GoogleDrive;
 use Illuminate\Support\Facades\Session;
 
-class FileUploadController extends Controller
+class GoogleDriveController extends Controller
 {
     public function uploadForm()
     {
-        return view('upload');
+        return view('googledrive');
     }
 
     public function upload(Request $request, GoogleDrive $googleDrive)
