@@ -1,10 +1,10 @@
 <x-app-layout>
   <x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-gray-200">
-        {{$category}}のうち{{$HScode_data -> descripiton}}なものを{{$Country}}へ送る
+    <h2 class="font-semibold text-xl text-white">
+        {{$category}}の{{$HScode_data -> descripiton}}を{{$Country}}へ送るための書類
     </h2>
   </x-slot>  
-    <div class="p-6 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-800 ">
+    <div class="p-6 bg-white  border-b border-gray-200  ">
         <h2>現在のデータ</h2>
         <h3>輸出可否</h3>
         @if($exportability_data->exportability== 1 )

@@ -6,9 +6,15 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-white leading-tight max-w-screen-xl ">
-            {{ $four_digit_ctt->description }}: [HScodde"{{ $four_digit_ctt->HScode_4 }}"]の内容
+            {{ $four_digit_ctt->description }}と輸出先の検索結果
         </h2>
     </x-slot>
+
+     <div class="flex">
+        <!-- サイドバーコンポーネントの呼び出し -->
+        @include('layouts.sidebar')
+
+        <main class="flex-1">
 
     <div class="mx-auto p-4 ">
     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6 max-auto text-gray-900 ">
@@ -17,16 +23,15 @@
                 <input type="hidden" name="number" value="{{ $four_digit_ctt->HScode_4 }}">
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                    <div class="col-span-2">
+                    <div class="col-span-3">
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">品目</label>
                         <span class="text-lg font-semibold">{{ $four_digit_ctt->description }}</span>
                     </div>
                     
-                    <div class="col-span-2">
+                    <div class="col-span-3">
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">HScode</label>
                         <span class="text-lg font-semibold">{{ $four_digit_ctt->HScode_4 }}{{ $four_digit_ctt->HScode_5 }}</span>
                     </div>
-                    <div class="clear-both">
                         @for($i = 1; $i <= $N; $i++)
                             <div>
                                 <label for="country{{ $i }}" class="block text-sm font-medium text-gray-700 dark:text-gray-300">輸出国{{ $i }}</label>
@@ -39,7 +44,6 @@
                                 </select>
                             </div>
                         @endfor
-                    </div>
                     
                     <div class="col-span-2 flex items-end">
                         <button type="submit" class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded">
@@ -84,9 +88,9 @@
                                 @if ($exportability)
                                     <!-- ここにexportabilityの具体的な情報を表示 -->
                                     @if($exportability->exportability== 1 )
-                                        <p class="">輸出可能<p>    
+                                        <p class="">輸出:O<p>    
                                     @elseif($exportability->exportability== 2 )
-                                        <p class="">輸出不可能<p>
+                                        <p class="">輸出:X<p>
                                     @else
                                         <p class="">判断保留中<p>
                                     @endif

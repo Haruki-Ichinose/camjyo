@@ -1,31 +1,50 @@
 <x-app-layout>
   <x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-gray-200">
-        {{$category}}のうち{{$HScode_data -> descripiton}}なものを{{$Country}}へ送る
+    <h2 class="font-semibold text-xl text-white leading-tight ">
+        {{$category}}のうち{{$HScode_data->descripiton}}なものを{{$Country}}へ送るための確認事項
     </h2>
    </x-slot>
+
+       <div class="flex">
+        <!-- サイドバーコンポーネントの呼び出し -->
+        @include('layouts.sidebar')
+
+        <main class="flex-1">
+
+        <div class="max-w-7xl mx-auto p-4 ">
+            <div class="bg-blue-800 overflow-hidden shadow-sm sm:rounded-lg">
+              
+                        <div class="font-semibold p-6 text-white ">
+                           <div class="col-span-3">
+                    <label class="block text-sm font-medium text-white">品目</label>
+                    <span class="text-lg font-semibold">{{$category}}</span>
+                </div>
+                </div>       
+        </div>
+
    <div class="py-12">
-    <div class="flex">
-      <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-      <div class="p-6 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-800 flex flex-col">
+    <div class="flex mx-auto">
+      <div class="bg-white dark:bg-gray-800 overflow-hidden  sm:rounded-lg mx-auto">
+      <div class="p-6 bg-blue-800  border-b border-gray-200  flex flex-col mx-auto">
     <div class="mb-4 text-left">
-        <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200">輸出可否</h3>
-        <p class="text-gray-700 dark:text-gray-300">
+        <h3 class="text-xl font-semibold text-white">輸出可否</h3>
+        <p class="text-white ">
             @if($exportability_data->exportability == 1)
-                輸出可能
+                輸出:O
             @elseif($exportability_data->exportability == 2)
-                輸出不可能
+                輸出:X
             @else
-                条件付き輸出可能
+                条件付き輸出:O
             @endif
         </p>
     </div>
+    
 
     <div class="text-left">
-        <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200">説明</h3>
-        <p class="text-gray-700 dark:text-gray-300">{{ $exportability_data->explanation }}</p>
+        <h3 class="text-xl font-semibold text-white">説明</h3>
+        <p class="text-white">{{ $exportability_data->explanation }}</p>
     </div>
-</div>
+    </div>
 </div>
  <div class=" mx-auto w-9/12">
         <div class="p-6 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-800 ">

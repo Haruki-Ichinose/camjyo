@@ -3,7 +3,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-white leading-tight">
-            TOP
+            確認したい品目の分類を選んでください
         </h2>
     </x-slot>
 
@@ -14,11 +14,11 @@
         <main class="flex-1">
             <div class="py-12">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div class="bg-teal-600 overflow-hidden shadow-sm sm:rounded-lg">
+                      <!-- <div class="bg-teal-600 overflow-hidden shadow-sm sm:rounded-lg">
                         <div class="p-6 text-white">
                             {{ __("You're logged in!") }}
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- ボタンの部分 -->
                     <div class="row row-cols-1 row-cols-md-3 g-4">
