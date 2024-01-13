@@ -8,6 +8,8 @@ use App\Models\Country;
 use App\Models\HScode_9digits;
 use App\Models\HScode_4digits;
 use App\Models\exportability;
+use App\Models\Parents;
+use App\Models\Child;
 use App\Http\Controllers\Hscode_6digitController;
 
 class ExportabilityController extends Controller
@@ -71,12 +73,23 @@ class ExportabilityController extends Controller
 
         $HScode_data = HScode_9digits::get9digit_TableContents_fromID($HScode_id);
 
-        $HScode_4 = $HScode_data -> HScode_4; 
+        $HScode_4 = $HScode_data -> HScode_4;
         $category = HScode_4digits::where('HScode_4',$HScode_4)->first();
         $category = $category -> description;
-        
+
+        $parents = Parents::orderBy('id','asc')->get();
+        $children = Child::orderBy('id','asc')->get();
      
-        return view('exportability.detail', compact('exportability_data','HScode_id','HScode_data','category','Country_id','Country') );        
+        return view('exportability.detail', compact(
+            'parents',
+            'children',
+            'exportability_data',
+            'HScode_id',
+            'HScode_data',
+            'category',
+            'Country_id',
+            'Country'
+            ) );        
     }
 
     /**
