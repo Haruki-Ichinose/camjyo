@@ -150,4 +150,5 @@ class ExportabilityController extends Controller
   
         return redirect()->route('6digit.access' ,['number'=>$number,'countries'=>$countries]);
     }
+    
 }

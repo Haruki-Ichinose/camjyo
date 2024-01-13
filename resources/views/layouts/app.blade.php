@@ -20,6 +20,7 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     </head>
     <body class="font-sans antialiased bg-white"> <!-- ここで背景色を指定 -->
         @include('layouts.navigation')

@@ -20,14 +20,23 @@
 
 
         <h3>この登録を削除する</h3>
-        <form action="{{ route('exportability.destroy',$exportability_data -> id) }}" method="POST">
-            @csrf
-            @method('delete')
-            @foreach($page_info as $value)
-                <input type="hidden" name="page_info[]" value="{{$value}}">
-            @endforeach
-            <input type="submit" value="削除実行"></button>
-        </form>
+        <button onclick="showModal()">削除実行</button>
+
+        <!-- モーダルウィンドウ -->
+        <div id="deleteModal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <p>本当に削除しますか？</p>
+                <form action="{{ route('exportability.destroy',$exportability_data -> id) }}" method="POST">
+                    @csrf
+                    @method('delete')
+                    @foreach($page_info as $value)
+                        <input type="hidden" name="page_info[]" value="{{$value}}">
+                    @endforeach
+                    <button type="submit" class="btn btn-danger">はい、削除する</button>
+                </form>
+            </div>
+        </div>
     </div>
     
     <div class="py-12">
@@ -64,4 +73,91 @@
       </div>
     </div>
   </div>
+
+  <script>
+        function showModal() {
+            document.getElementById("deleteModal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("deleteModal").style.display = "none";
+        }
+  </script>
+  <style>
+    .modal {
+      display: none; /* 初期状態ではモーダルを非表示にする */
+      position: fixed; /* モーダルを画面に固定 */
+      z-index: 2; /* 他の要素より上に表示 */
+      left: 0;
+      top: 0;
+      width: 100%; /* 幅全体 */
+      height: 100%; /* 高さ全体 */
+      overflow: auto; /* スクロールバーが必要な場合に表示 */
+      background-color: rgb(0, 0, 0); /* 背景色は黒 */
+      background-color: rgba(0, 0, 0, 0.4); /* 背景色は半透明 */
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto; /* 上下にマージンを取り、水平方向は自動で中央揃え */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 50%; /* モーダルの幅を設定 */
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+      animation-name: animatetop;
+      animation-duration: 0.4s
+    }
+
+    @keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+    }
+
+    .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    }
+
+    .modal-header {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+    }
+
+    .modal-body {padding: 2px 16px;}
+
+    .modal-footer {
+    padding: 2px 16px;
+    background-color: #5cb85c;
+    color: white;
+    }
+
+    /* ボタンのデザイン */
+    .btn {
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 18px;
+    }
+
+    /* 削除ボタンのスタイル */
+    .btn-danger {
+    background-color: #f44336;
+    color: white;
+    }
+
+    /* 削除ボタンのホバー時のスタイル */
+    .btn-danger:hover {
+    background-color: #da190b;
+    }
+  </style>
 </x-app-layout>
