@@ -22,4 +22,11 @@ class Country extends Model
     
         return $country ? $country->id : null;
     }
+
+    public static function getCountry_name($string)
+    {   
+        $country = self::where('id', $string)->orderBy('id', 'asc')->first();
+    
+        return $country ? $country->name : null;
+    }
 }

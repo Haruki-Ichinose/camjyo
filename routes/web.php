@@ -28,8 +28,7 @@ Route::post('Hscode_6digit/show', [Hscode_6digitController::class,'show'])->name
 Route::get('Hscode_6digit/access', [Hscode_6digitController::class,'access'])->name('6digit.access');
 
 Route::get('exportability/edit',[ ExportabilityController::class,'edit'])->name('exportability.edit');
-Route::get('exportability/show',[ ExportabilityController::class,'show'])->name('exportability.show');
-Route::resource('exportability', ExportabilityController::class)->except(['edit','show']);
+Route::resource('exportability', ExportabilityController::class)->except('edit');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
