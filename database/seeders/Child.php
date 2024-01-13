@@ -15,7 +15,7 @@ class Child extends Seeder
     {
         DB::table('children')->insert([
             ['parents_id'=> '1','child'=> '認定・FDAなど'],
-            ['parents_id'=> '1','child'=> '輸出先で商品受け取りに関して'],
+            ['parents_id'=> '2','child'=> '輸出先で商品受け取りに関して'],
             ['parents_id'=> '2','child'=> '動物・植物検疫検査'],
             ['parents_id'=> '2','child'=> '貿易協定'],
             ['parents_id'=> '2','child'=> '添加物・残留農薬など'],
