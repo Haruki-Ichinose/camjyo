@@ -18,7 +18,7 @@
                 <option selected>輸出状況を選択</option>
                 <option value="1">O</option>
                 <option value="2">X</option>
-                <option value="3">条件付きO</option>
+                <option value="3">Δ(条件付可能)</option>
               </select>
             </div>
             <div class="mb-3">

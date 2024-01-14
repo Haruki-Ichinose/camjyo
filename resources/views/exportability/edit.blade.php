@@ -50,9 +50,9 @@
             <div class="mb-10">
               <select class="form-select mb-3" name="exportability" id="">
                 <option selected>輸出状況を選択</option>
-                <option value="1">輸出可能</option>
-                <option value="2">輸出不可</option>
-                <option value="3">条件付き輸出可能</option>
+                <option value="1">O</option>
+                <option value="2">X</option>
+                <option value="3">Δ(条件付可能)</option>
               </select>
             </div>
             <div class="mb-3">
