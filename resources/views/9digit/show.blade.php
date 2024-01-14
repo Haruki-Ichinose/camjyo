@@ -88,11 +88,11 @@
                                 @if ($exportability)
                                     <!-- ここにexportabilityの具体的な情報を表示 -->
                                     @if($exportability->exportability== 1 )
-                                        <p class="">輸出:O<p>    
+                                        <p class="text-xl text-bold text-red-500">〇:可能<p>    
                                     @elseif($exportability->exportability== 2 )
-                                        <p class="">輸出:X<p>
+                                        <p class="text-xl text-bold text-blue-700">x:不可<p>
                                     @else
-                                        <p class="">判断保留中<p>
+                                        <p class="text-xl text-bold text-yellow-400">△:条件付<p>
                                     @endif
                                     <form method="GET" action="{{ route('exportability.edit')}}">
                                         <input type="hidden" name="exportability_id" value="{{ $exportability -> id }}" >
@@ -100,14 +100,14 @@
                                         @for($k = 1; $k <= $N; $k++)    
                                             <input type="hidden" name="page_info[]" value="{{ $input_countries[$k-1] }}">
                                         @endfor
-                                        <input type="submit" value="編集"></button>
+                                        <input class="text-sm border-b-2 boder-gray-900" type="submit" value="編集"></button>
                                     </form>
                                     <form action="{{ route('exportability.show', ['exportability' => $exportability->id]) }}" method="GET">
-                                        <button type="submit">詳細書類確認</button>
+                                        <button class="text-sm border-b-2 boder-gray-900" type="submit">詳細書類確認</button>
                                     </form>
                                 @else
                                     <!-- 情報がない場合のリンク -->
-                                    <p class="">データ未入力<p>
+                                    <p class="text-lg text-bold text-gray-400">データ未入力<p>
                                     <form method="GET" action="{{ route('exportability.create')}}">
                                         <input type="hidden" name="Country" value="{{ $input_countries[$i-1] }}" >
                                         <input type="hidden" name="HScode_id" value="{{ $hscode_id}}">
@@ -115,7 +115,7 @@
                                         @for($k = 1; $k <= $N; $k++)    
                                             <input type="hidden" name="page_info[]" value="{{ $input_countries[$k-1] }}">
                                         @endfor
-                                        <input type="submit" value="新規登録"></button>
+                                        <input class="text-sm border-b-2 boder-gray-900" type="submit" value="新規登録"></button>
                                     </form>
                                 @endif
                                 </td>
