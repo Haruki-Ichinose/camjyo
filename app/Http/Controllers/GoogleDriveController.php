@@ -8,33 +8,37 @@ use Illuminate\Support\Facades\Session;
 
 class GoogleDriveController extends Controller
 {
-    public function uploadForm()
+    public function googledriveForm()
     {
         return view('googledrive');
     }
 
     public function upload(Request $request, GoogleDrive $googleDrive)
     {
-        // リクエストからファイルを取得
         $file = $request->file('file');
 
-        // ファイルが存在するか確認
         if ($file) {
-            // アップロード処理
             try {
                 $googleDrive->fileUpload($file);
-
-                // アップロード成功時のメッセージをセッションに保存
                 Session::flash('success', 'ファイルがアップロードされました。');
             } catch (\Exception $e) {
-                // アップロード失敗時のメッセージをセッションに保存
                 Session::flash('error', 'ファイルのアップロード中にエラーが発生しました。');
             }
         } else {
-            // ファイルが選択されていない場合のメッセージをセッションに保存
             Session::flash('error', 'ファイルが選択されていません。');
         }
 
         return redirect()->back();
+    }
+
+    public function listFiles(GoogleDrive $googleDrive)
+    {
+        $files = $googleDrive->getFileList();
+        return view('googledrive_files', ['files' => $files]);
+    }
+
+    public function downloadFile($id, GoogleDrive $googleDrive)
+    {
+        return $googleDrive->downloadFile($id);
     }
 }

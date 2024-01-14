@@ -43,7 +43,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/upload', [GoogleDriveController::class, 'uploadForm'])->name('upload.form');
+Route::get('/googledrive', [GoogleDriveController::class, 'googledriveForm'])->name('upload.form');
 Route::post('/upload', [GoogleDriveController::class, 'upload'])->name('upload');
+Route::get('/googledrive/files', [GoogleDriveController::class, 'listFiles'])->name('googledrive.files');
+Route::get('/googledrive/download/{id}', [GoogleDriveController::class, 'downloadFile'])->name('googledrive.download');
 
 require __DIR__.'/auth.php';

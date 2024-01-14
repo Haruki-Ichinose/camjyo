@@ -43,4 +43,37 @@ class GoogleDrive
             'fields' => 'id',
         ]);
     }
+
+     /**
+     * Googleドライブにあるファイルの一覧を取得する
+     * @return array
+     */
+    public function getFileList()
+    {
+        $service = $this->getDriveClient();
+        $files = [];
+        $response = $service->files->listFiles();
+        foreach ($response->getFiles() as $file) {
+            $files[] = ['name' => $file->getName(), 'id' => $file->getId()];
+        }
+        return $files;
+    }
+
+    /**
+     * 指定されたファイルIDのファイルをダウンロードする
+     * @param string $fileId
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
+     */
+    public function downloadFile($fileId)
+    {
+        $service = $this->getDriveClient();
+        $response = $service->files->get($fileId, [
+            'alt' => 'media'
+        ]);
+
+        return response()->streamDownload(function () use ($response) {
+            echo $response->getBody()->getContents();
+        }, $response->getName());
+    }
+
 }
