@@ -4,45 +4,40 @@
         {{$category}}の{{$HScode_data -> descripiton}}を{{$Country}}へ送るための書類
     </h2>
   </x-slot>  
-    <div class="p-6 bg-white  border-b border-gray-200  ">
-        <h2>現在のデータ</h2>
-        <h3>輸出可否</h3>
-        @if($exportability_data->exportability== 1 )
-            <p class="">輸出可能<p>    
-        @elseif($exportability_data->exportability== 2 )
-            <p class="">輸出不可能<p>
+  <main class="flex-1"> 
+    <div class="py-12 flex ">
+    <div class="w-4/12 ">
+  <div class="p-6 bg-blue-800 shadow-sm sm:rounded-l  mx-auto">
+    <div class="mx-auto p-2">
+        <h2 class="font-semibold text-xl text-white flex">現在のデータ</h2>
+    </div>
+
+    <div class="mx-auto p-2">
+        <h3 class="font-semibold text-xl text-white">輸出可否</h3>
+        @if($exportability_data->exportability == 1)
+            <p class="text-white">輸出可能</p>    
+        @elseif($exportability_data->exportability == 2)
+            <p class="text-white">輸出不可能</p>
         @else
-            <p class="">条件付き輸出可能<p>
+            <p class="text-white">条件付き輸出可能</p>
         @endif
-    
-        <h3>説明</h3>
-        <p>{{$exportability_data -> explanation}}</p>
+    </div>
+  
+    <div class="mx-auto p-2">
+        <h3 class="font-semibold text-xl text-white">説明</h3>
+        <p class="text-white">{{$exportability_data->explanation}}</p>
+    </div>
 
-
-        <h3>この登録を削除する</h3>
-        <button onclick="showModal()">削除実行</button>
-
-        <!-- モーダルウィンドウ -->
-        <div id="deleteModal" class="modal" style="display:none;">
-            <div class="modal-content">
-                <span class="close" onclick="closeModal()">&times;</span>
-                <p>本当に削除しますか？</p>
-                <form action="{{ route('exportability.destroy',$exportability_data -> id) }}" method="POST">
-                    @csrf
-                    @method('delete')
-                    @foreach($page_info as $value)
-                        <input type="hidden" name="page_info[]" value="{{$value}}">
-                    @endforeach
-                    <button type="submit" class="btn btn-danger">はい、削除する</button>
-                </form>
-            </div>
-        </div>
+    <div class="mx-auto p-2">
+        <h3 class="text-white">この登録を削除する</h3>
+        <button onclick="showModal()" class="text-white bg-red-500 hover:bg-red-600 py-2 px-4 rounded">削除実行</button>
+    </div>
+  </div>
     </div>
     
-    <div class="py-12">
-    <div class="max-w-7xl mx-auto sm:w-8/12 md:w-1/2 lg:w-5/12">
-      <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-        <div class="p-6 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-800 ">
+
+ <div class=" mx-auto w-9/12 p-6">
+      <div class=" bg-white dark:bg-gray-800 border-b border-blue-800 dark:border-gray-800 ">
           @include('common.errors')
           <form class="mb-6" action="{{ route('exportability.update',$exportability_data -> id) }}" method="POST">
             @csrf
@@ -68,10 +63,33 @@
                 <input type="submit" value="変更を登録する">
             </div>
           </form>
-
         </div>
-      </div>
+     </div>
+   </div>
+</div>
+</main>
+
+
+
+
+        <!-- モーダルウィンドウ -->
+        <div id="deleteModal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <p>本当に削除しますか？</p>
+                <form action="{{ route('exportability.destroy',$exportability_data -> id) }}" method="POST">
+                    @csrf
+                    @method('delete')
+                    @foreach($page_info as $value)
+                        <input type="hidden" name="page_info[]" value="{{$value}}">
+                    @endforeach
+                    <button type="submit" class="btn btn-danger">はい、削除する</button>
+                </form>
+            </div>
+        </div>
     </div>
+    </div>
+   
   </div>
 
   <script>
