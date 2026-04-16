@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Hscode_2digitController;
 use App\Http\Controllers\Hscode_6digitController;
 use App\Http\Controllers\ExportabilityController;
-use App\Http\Controllers\GoogleDriveController;
 use App\Http\Controllers\DocumentController;
 
 /*
@@ -42,10 +41,5 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-Route::get('/googledrive', [GoogleDriveController::class, 'googledriveForm'])->name('upload.form');
-Route::post('/upload', [GoogleDriveController::class, 'upload'])->name('upload');
-Route::get('/googledrive/files', [GoogleDriveController::class, 'listFiles'])->name('googledrive.files');
-Route::get('/googledrive/download/{id}', [GoogleDriveController::class, 'downloadFile'])->name('googledrive.download');
 
 require __DIR__.'/auth.php';
